@@ -8,4 +8,8 @@ Just kidding lol
 Go home and be a family man.
 
 
+
 Os quiero a todos.
+
+Fuck you all. You are not funny. Specially you, Ivan de los penes.
+
