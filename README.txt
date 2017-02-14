@@ -7,3 +7,4 @@ Just kidding lol
 
 Go home and be a family man.
 
+Fuck you all. You are not funny. Specially you, Ivan de los penes.
