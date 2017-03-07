@@ -19,8 +19,10 @@ int main(int argc, char* args[])
 	SDL_CreateWindowAndRenderer(640, 480, SDL_WINDOW_RESIZABLE, &window, &renderer);
     surface = SDL_LoadBMP("ship.bmp");
     texture = SDL_CreateTextureFromSurface(renderer, surface); 
-	surface->clip_rect.h = 60;
-	surface->clip_rect.w = 60;
+	surface->clip_rect.h = 50;
+	surface->clip_rect.w = 50;
+	surface->clip_rect.x = x;
+	surface->clip_rect.y = y;
 
 
 	while (close == 0)
@@ -54,17 +56,22 @@ int main(int argc, char* args[])
 				surface->clip_rect.y += 10;
 			}
 
+			if (event.key.keysym.sym == SDLK_SPACE)
+			{
+				surface->clip_rect.h += 1;
+				surface->clip_rect.w += 1;
+			}
+
+			if (event.key.keysym.sym == SDLK_z)
+			{
+				surface->clip_rect.h -= 1;
+				surface->clip_rect.w -= 1;
+			}
+
 			SDL_SetRenderDrawColor(renderer, 0, 0, 255, 255);
 
 			SDL_RenderClear(renderer);
 
-			
-
-		
-
-			
-
-			
 			SDL_RenderCopy(renderer, texture, NULL, &surface->clip_rect);
 
 			SDL_RenderPresent(renderer);
