@@ -17,10 +17,15 @@ int main(int argc, char* args[])
 	SDL_Window *window;
 	SDL_Renderer *renderer;
 	SDL_CreateWindowAndRenderer(640, 480, SDL_WINDOW_RESIZABLE, &window, &renderer);
+    surface = SDL_LoadBMP("ship.bmp");
+    texture = SDL_CreateTextureFromSurface(renderer, surface); 
+	surface->clip_rect.h = 60;
+	surface->clip_rect.w = 60;
+
 
 	while (close == 0)
 	{
-		surface = SDL_LoadBMP("ship.bmp");
+		
 
 		if (SDL_PollEvent(&event))
 		{
@@ -31,39 +36,35 @@ int main(int argc, char* args[])
 			
 			if (event.key.keysym.sym == SDLK_LEFT)
 			{
-				x -= 10;
+				surface->clip_rect.x -= 10;
 			}
 
 			if (event.key.keysym.sym == SDLK_RIGHT)
 			{
-				x += 10;
+				surface->clip_rect.x += 10;
 			}
 
 			if (event.key.keysym.sym == SDLK_UP)
 			{
-				y -= 10;
+				surface->clip_rect.y -= 10;
 			}
 
 			if (event.key.keysym.sym == SDLK_DOWN)
 			{
-				y += 10;
+				surface->clip_rect.y += 10;
 			}
 
 			SDL_SetRenderDrawColor(renderer, 0, 0, 255, 255);
 
 			SDL_RenderClear(renderer);
 
-			SDL_Rect rectangle;
-			rectangle.x = x;
-			rectangle.y = y;
-			rectangle.w = 50;
-			rectangle.h = 50;
+			
 
-			SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
+		
 
-			SDL_RenderFillRect(renderer, &rectangle);
+			
 
-			SDL_CreateTextureFromSurface(renderer, surface); 
+			
 			SDL_RenderCopy(renderer, texture, NULL, &surface->clip_rect);
 
 			SDL_RenderPresent(renderer);
