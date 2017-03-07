@@ -9,15 +9,20 @@ int main(int argc, char* args[])
 {
 	int close = 0;
 	int i = 0;
+	int j = 0;
+	int k = 0;
+	int b = 0;
 	int a = 0;
 	int shot = 0;
 	int x = 295;
 	int y = 215;
 	SDL_Texture* texture;
 	SDL_Texture* textureb;
+	SDL_Texture* texturec;
 	SDL_Event event;
 	SDL_Surface* surface;
 	SDL_Surface* surfaceb[20];
+	SDL_Surface* surfacec[1];
 	SDL_Init(SDL_INIT_EVERYTHING);
 	SDL_Window *window;
 	SDL_Renderer *renderer;
@@ -35,7 +40,20 @@ int main(int argc, char* args[])
 
 		a++;
 	}
+
+	while (b < 2)
+	{
+		surfacec[b] = SDL_LoadBMP("map.bmp");
+		surfacec[b]->clip_rect.h = 640;
+		surfacec[b]->clip_rect.w = 640;
+		surfacec[b]->clip_rect.x = 0;
+		surfacec[b]->clip_rect.y = 0;
+
+		b++;
+	}
+
 	textureb = SDL_CreateTextureFromSurface(renderer, surfaceb[0]);
+	texturec = SDL_CreateTextureFromSurface(renderer, surfacec[0]);
 	texture = SDL_CreateTextureFromSurface(renderer, surface);
 
 	surface->clip_rect.h = 50;
@@ -43,9 +61,11 @@ int main(int argc, char* args[])
 	surface->clip_rect.x = x;
 	surface->clip_rect.y = y;
 	a = 0;
+	b = 0;
+
 	while (close == 0)
 	{
-		if (a == 20)
+		if (a == 19)
 		{
 			a = 0;
 		}
@@ -79,23 +99,43 @@ int main(int argc, char* args[])
 
 			if (event.key.keysym.sym == SDLK_SPACE)
 			{
+				a++;
 				shot = 1;
 				surfaceb[a]->clip_rect.x = (surface->clip_rect.x + 15);
 				surfaceb[a]->clip_rect.y = surface->clip_rect.y;
-				a++;
 			}
 		}
 
 		if (i % 10 == 0)
 		{
-			surfaceb[a]->clip_rect.y--;
+			while (k != 20)
+			{
+				surfaceb[k]->clip_rect.y--;
+				k++;
+			}
 		}
+
+		k = 0;
+
+		if (i % 10 == 0)
+		{
+				surfacec[j]->clip_rect.y--;
+		}
+
+
 
 		SDL_SetRenderDrawColor(renderer, 0, 0, 255, 255);
 
 		SDL_RenderClear(renderer);
 
- 		SDL_RenderCopy(renderer, textureb, NULL, &surfaceb[0]->clip_rect);
+		SDL_RenderCopy(renderer, texturec, NULL, &surfacec[j]->clip_rect);
+
+		while (k != 20)
+		{
+			SDL_RenderCopy(renderer, textureb, NULL, &surfaceb[k]->clip_rect);
+			k++;
+		}
+		k = 0;
 
 		SDL_RenderCopy(renderer, texture, NULL, &surface->clip_rect);
 
@@ -105,11 +145,18 @@ int main(int argc, char* args[])
 	}
 
 	a = 0;
+	b = 0;
 
 	while (a < 20)
 	{
 		SDL_FreeSurface(surfaceb[a]);
-		++a;
+		a++;
+	}
+
+	while (b < 2)
+	{
+		SDL_FreeSurface(surfacec[b]);
+		b++;
 	}
 
 	SDL_DestroyWindow(window);
