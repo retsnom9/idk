@@ -10,7 +10,9 @@ int main(int argc, char* args[])
 	int close = 0;
 	int x = 295;
 	int y = 215;
+	SDL_Texture* texture;
 	SDL_Event event;
+	SDL_Surface* surface;
 	SDL_Init(SDL_INIT_EVERYTHING);
 	SDL_Window *window;
 	SDL_Renderer *renderer;
@@ -18,6 +20,8 @@ int main(int argc, char* args[])
 
 	while (close == 0)
 	{
+		surface = SDL_LoadBMP("ship.bmp");
+
 		if (SDL_PollEvent(&event))
 		{
 			if (event.key.keysym.sym == SDLK_ESCAPE)
@@ -58,6 +62,9 @@ int main(int argc, char* args[])
 			SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
 
 			SDL_RenderFillRect(renderer, &rectangle);
+
+			SDL_CreateTextureFromSurface(renderer, surface); 
+			SDL_RenderCopy(renderer, texture, NULL, &surface->clip_rect);
 
 			SDL_RenderPresent(renderer);
 		}
