@@ -24,7 +24,7 @@ int main(int argc, char* args[])
 	SDL_CreateWindowAndRenderer(640, 480, SDL_WINDOW_RESIZABLE, &window, &renderer);
 
 	surface = SDL_LoadBMP("ship.bmp");
-	textureb = SDL_CreateTextureFromSurface(renderer, surfaceb[a]);
+
 	while (a < 20)
 	{
 		surfaceb[a] = SDL_LoadBMP("shot.bmp");
@@ -35,14 +35,14 @@ int main(int argc, char* args[])
 
 		a++;
 	}
-
+	textureb = SDL_CreateTextureFromSurface(renderer, surfaceb[0]);
 	texture = SDL_CreateTextureFromSurface(renderer, surface);
 
 	surface->clip_rect.h = 50;
 	surface->clip_rect.w = 50;
 	surface->clip_rect.x = x;
 	surface->clip_rect.y = y;
-
+	a = 0;
 	while (close == 0)
 	{
 		if (a == 20)
@@ -95,7 +95,7 @@ int main(int argc, char* args[])
 
 		SDL_RenderClear(renderer);
 
-		SDL_RenderCopy(renderer, textureb, NULL, &surfaceb[a]->clip_rect);
+ 		SDL_RenderCopy(renderer, textureb, NULL, &surfaceb[0]->clip_rect);
 
 		SDL_RenderCopy(renderer, texture, NULL, &surface->clip_rect);
 
@@ -108,7 +108,8 @@ int main(int argc, char* args[])
 
 	while (a < 20)
 	{
-		SDL_FreeSurface(surfaceb[0]);
+		SDL_FreeSurface(surfaceb[a]);
+		++a;
 	}
 
 	SDL_DestroyWindow(window);
