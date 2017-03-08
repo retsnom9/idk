@@ -41,16 +41,17 @@ int main(int argc, char* args[])
 		a++;
 	}
 
-	while (b < 2)
-	{
-		surfacec[b] = SDL_LoadBMP("map.bmp");
-		surfacec[b]->clip_rect.h = 640;
-		surfacec[b]->clip_rect.w = 640;
-		surfacec[b]->clip_rect.x = 0;
-		surfacec[b]->clip_rect.y = 0;
+	surfacec[0] = SDL_LoadBMP("map.bmp");
+	surfacec[0]->clip_rect.h = 640;
+	surfacec[0]->clip_rect.w = 640;
+	surfacec[0]->clip_rect.x = 0;
+	surfacec[0]->clip_rect.y = 0;
 
-		b++;
-	}
+	surfacec[1] = SDL_LoadBMP("map.bmp");
+	surfacec[1]->clip_rect.h = 640;
+	surfacec[1]->clip_rect.w = 640;
+	surfacec[1]->clip_rect.x = 0;
+	surfacec[1]->clip_rect.y = 640;
 
 	textureb = SDL_CreateTextureFromSurface(renderer, surfaceb[0]);
 	texturec = SDL_CreateTextureFromSurface(renderer, surfacec[0]);
@@ -69,6 +70,13 @@ int main(int argc, char* args[])
 		{
 			a = 0;
 		}
+
+		if (j == 1)
+		{
+			j = 0;
+		}
+
+		j++;
 
 		if (SDL_PollEvent(&event))
 		{
@@ -128,7 +136,12 @@ int main(int argc, char* args[])
 
 		SDL_RenderClear(renderer);
 
-		SDL_RenderCopy(renderer, texturec, NULL, &surfacec[j]->clip_rect);
+		while (k != 2)
+		{
+			SDL_RenderCopy(renderer, texturec, NULL, &surfacec[j]->clip_rect);
+			k++;
+		}
+		k = 0;
 
 		while (k != 20)
 		{
@@ -140,6 +153,11 @@ int main(int argc, char* args[])
 		SDL_RenderCopy(renderer, texture, NULL, &surface->clip_rect);
 
 		SDL_RenderPresent(renderer);
+
+		if (surfacec[j]->clip_rect.y <= -640)
+		{
+			surfacec[j]->clip_rect.y = 640;
+		}
 
 		i++;
 	}
