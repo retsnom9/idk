@@ -86,7 +86,7 @@ update_status ModulePlayer::Update()
 			current_animation = &left;
 		}
 
-		if (current_animation != &left1 && SDL_GetTicks() >= (time + 500))
+		if (current_animation != &left1 && SDL_GetTicks() >= (time + 300))
 		{
 			left1.Reset();
 			current_animation = &left1;
@@ -117,7 +117,7 @@ update_status ModulePlayer::Update()
 			current_animation = &right;
 		}
 
-		if (current_animation != &right1 && SDL_GetTicks() >= (time + 500))
+		if (current_animation != &right1 && SDL_GetTicks() >= (time + 300))
 		{
 			right1.Reset();
 			current_animation = &right1;
@@ -147,11 +147,23 @@ update_status ModulePlayer::Update()
 	 if (App->input->keyboard[SDL_SCANCODE_A] == KEY_STATE::KEY_UP)
 	 {
 		 allowtime = true;
+		 time = SDL_GetTicks();
+		 if (current_animation != &left)
+		 {
+			left.Reset();
+			current_animation = &left;
+		 }
 	 }
 
 	 if (App->input->keyboard[SDL_SCANCODE_D] == KEY_STATE::KEY_UP)
 	 {
 		 allowtime = true;
+		 time = SDL_GetTicks();
+		 if (current_animation != &right)
+		 {
+			right.Reset();
+			current_animation = &right;
+		 }
 	 }
 
 	// TODO 3: Shoot lasers when the player hits SPACE
@@ -171,7 +183,10 @@ update_status ModulePlayer::Update()
 		App->input->keyboard[SDL_SCANCODE_A] == KEY_STATE::KEY_IDLE
 		&& App->input->keyboard[SDL_SCANCODE_D] == KEY_STATE::KEY_IDLE)
 	{
-		current_animation = &idle;
+		if (SDL_GetTicks() >= time + 100)
+		{
+			current_animation = &idle;
+		}
 	}
 
 	if (App->input->keyboard[SDL_SCANCODE_SPACE] == KEY_STATE::KEY_DOWN)
