@@ -86,12 +86,6 @@ update_status ModulePlayer::Update()
 			current_animation = &left;
 		}
 
-		/*
-		if (App->input->keyboard[SDL_SCANCODE_A] == KEY_STATE::KEY_UP)
-		{
-			allowtime = true;
-		}
-		*/
 		if (current_animation != &left1 && SDL_GetTicks() >= (time + 500))
 		{
 			left1.Reset();
@@ -128,12 +122,7 @@ update_status ModulePlayer::Update()
 			right1.Reset();
 			current_animation = &right1;
 		}
-		/*
-		if (App->input->keyboard[SDL_SCANCODE_D] == KEY_STATE::KEY_UP)
-		{
-			allowtime = true;
-		}
-		*/
+
 		if (App->map_1->IsEnabled() && position.x <= 600)
 		{
 			position.x += speed;
@@ -148,14 +137,22 @@ update_status ModulePlayer::Update()
 	if (App->input->keyboard[SDL_SCANCODE_S] == KEY_STATE::KEY_REPEAT)
 	{
 		position.y += speed;
-		allowtime = true;
 	}
 
 	 if (App->input->keyboard[SDL_SCANCODE_W] == KEY_STATE::KEY_REPEAT)
 	{
 		position.y -= speed;
-		allowtime = true;
 	}
+
+	 if (App->input->keyboard[SDL_SCANCODE_A] == KEY_STATE::KEY_UP)
+	 {
+		 allowtime = true;
+	 }
+
+	 if (App->input->keyboard[SDL_SCANCODE_D] == KEY_STATE::KEY_UP)
+	 {
+		 allowtime = true;
+	 }
 
 	// TODO 3: Shoot lasers when the player hits SPACE
 
