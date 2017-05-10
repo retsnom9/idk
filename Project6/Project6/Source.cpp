@@ -130,8 +130,6 @@ int main(int argc, char* args[])
 				surfacec[j]->clip_rect.y--;
 		}
 
-
-
 		SDL_SetRenderDrawColor(renderer, 0, 0, 255, 255);
 
 		SDL_RenderClear(renderer);
